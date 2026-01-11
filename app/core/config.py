@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
     LLM : str = Field(default="gpt-4o-mini", description="The generator model")
     EMBEDDING_MODEL : str = "sentence-transformers/all-MiniLM-L6-v2"
+    DIMENSION: int = 384
     
     # LangSmith (Monitoring)
     LANGSMITH_API_KEY : Optional[str] = Field(default=None, description="LangSmith API key")
