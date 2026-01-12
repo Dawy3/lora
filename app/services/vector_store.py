@@ -11,7 +11,8 @@ import structlog
 import uuid
 
 from pinecone import Pinecone, ServerlessSpec
-from qdrant_client.models import Filter, FieldCondition, MatchValue
+from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue, Distance, VectorParams, PointStruct
 
 
 from app.core.config import settings
@@ -155,8 +156,7 @@ class QdrantBackend(VectorStoreBackend):
     """Qdrant vector store backend"""
     
     def __init__(self):
-        from qdrant_client import QdrantClient
-        from qdrant_client.models import Distance, VectorParams
+        
         
         self.client = QdrantClient(
             url=settings.QDRANT_URL,
@@ -171,14 +171,11 @@ class QdrantBackend(VectorStoreBackend):
         collection: str
     ) -> str:
         """Add document to Qdrant"""
-        from qdrant_client.models import PointStruct
-        import uuid
         
         # Ensure collection exists
         try:
             self.client.get_collection(collection)
         except:
-            from qdrant_client.models import Distance, VectorParams
             self.client.create_collection(
                 collection_name=collection,
                 vectors_config=VectorParams(size=1536, distance=Distance.COSINE)
