@@ -302,23 +302,6 @@ class VectorStore:
             filter= filter
         )
         
-# Factor function 
-def create_vector_store(backend_type: str = "pinecone") -> VectorStore:
-    if backend_type == "pinecone":
-        backend= PineconeBackend()
-    elif backend_type == "qdrant":
-        backend = QdrantBackend()
-    else:
-        raise ValueError(f"Unknown backend: {backend_type}")
-    
-    return VectorStore(backend= backend)
-
-        
-        
-    
-    
-    
-
 # Factory function
 def create_vector_store(
     backend_type: str = "pinecone",
