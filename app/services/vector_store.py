@@ -17,7 +17,8 @@ from pinecone import Pinecone, ServerlessSpec, PineconeException
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
     Filter, FieldCondition, MatchValue, Distance, VectorParams,
-    PointStruct, SparseVectorParams, SparseVector
+    PointStruct, SparseVectorParams, SparseVector,
+    HnswConfigDiff, SparseIndexParams
 )
 
 from app.core.config import settings
@@ -164,7 +165,7 @@ class QdrantBackend(VectorStoreBackend):
         if not self.client.collection_exists(collection_name):
             self.client.create_collection(
                 collection_name=collection_name,
-                vectors_config={"dense": VectorParams(size=settings.DIMENSION, distance=Distance.COSINE)},
+                vectors_config={"dense": VectorParams(size=settings.DIMENSION, distance=Distance.COSINE, hnsw_config=HnswConfigDiff(m=16, ef_construct=100, full_scan_threshold=10000))},
                 sparse_vectors_config={"sparse": SparseVectorParams(index=SparseVectorParams(on_disk=True))}
             )
 
