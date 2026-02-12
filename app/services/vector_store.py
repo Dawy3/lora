@@ -21,7 +21,7 @@ from qdrant_client.models import (
     HnswConfigDiff, SparseIndexParams
 )
 
-from app.core.config import settings
+from app.config import settings
 import structlog
 
 logger = structlog.get_logger()
