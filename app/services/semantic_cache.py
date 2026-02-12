@@ -18,7 +18,7 @@ import numpy as np
 from langchain_huggingface import HuggingFaceEmbeddings
 import structlog
 
-from app.core.config import settings
+from app.config import settings
 
 # Configure structed logging
 logger = structlog.get_logger()
